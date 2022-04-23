@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="LOG_DIR" value="${log_dir}"/>
+    <property name="APP_NAME" value="spring-batch-demo"/>
+    <property name="logPattern"
+              value="${FILE_LOG_PATTERN:-%d{yyyy-MM-dd HH:mm:ss.SSS} ${LOG_LEVEL_PATTERN:-%5p} ${PID:- } --- [%t] %-40.40logger{39} : %m%n}"/>
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${logPattern}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="rollingFileINFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/${APP_NAME}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/${APP_NAME}.%d{yyyy-MM-dd}.log</fileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${logPattern}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="rollingFileERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/${APP_NAME}_error.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/${APP_NAME}_error.%d{yyyy-MM-dd}.log</fileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${logPattern}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>WARN</level>
+        </filter>
+    </appender>
+
+    <appender name="rollingFileSQL" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/SQL/${APP_NAME}_sql.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/SQL/${APP_NAME}_sql.%d{yyyy-MM-dd}.log</fileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${logPattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Appender to log to file in a JSON format -->
+    <appender name="logStashFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/${APP_NAME}_logStash.json</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/logStash/${APP_NAME}_logStash.json.%d{yyyy-MM-dd}.gz</fileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder" charset="UTF-8">
+            <providers>
+                <pattern>
+                    <pattern>
+                        {
+                        "timestamp": "%d{yyyy-MM-dd HH:mm:ss.SSS}",
+                        "level": "%level",
+                        "service": "${APP_NAME:-}",
+                        "traceId": "%X{X-B3-TraceId:-}",
+                        "pid": "${PID:-}",
+                        "thread": "%thread",
+                        "class": "%logger{40}",
+                        "msg": "%message",
+                        "stack": "%ex"
+                        }
+                    </pattern>
+                </pattern>
+            </providers>
+        </encoder>
+    </appender>
+
+    <!-- 应用日志 -->
+    <logger name="com.example.springbatchdemo" level="INFO"/>
+
+    <!-- 系统日志 -->
+    <logger name="org.springframework" level="INFO"/>
+
+    <!-- SQL日志 -->
+    <logger name="com.example.springbatchdemo.mapper" level="DEBUG" additivity="false">
+        <appender-ref ref="console"/>
+        <appender-ref ref="rollingFileSQL"/>
+    </logger>
+
+    <!-- 外部请求日志 -->
+    <logger name="org.springframework.web.filter.CommonsRequestLoggingFilter" level="DEBUG" additivity="false">
+        <appender-ref ref="rollingFileINFO"/>
+        <appender-ref ref="logStashFile"/>
+        <appender-ref ref="console"/>
+    </logger>
+
+    <root level="INFO">
+        <appender-ref ref="console"/>
+        <appender-ref ref="rollingFileINFO"/>
+        <appender-ref ref="rollingFileERROR"/>
+        <appender-ref ref="logStashFile"/>
+    </root>
+</configuration>
