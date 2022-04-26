@@ -33,6 +33,7 @@ public class BatchProcessPersonJob {
     @Bean
     public Job importUserJob() {
         return jobBuilderFactory.get("importUserJob")
+                .preventRestart()
                 .incrementer(new RunIdIncrementer())
                 .listener(batchProcessPersonCompletionListener)
                 .flow(batchProcessPersonStep1)
