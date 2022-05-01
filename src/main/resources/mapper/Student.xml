@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.springbatchdemo.mapper.StudentMapper">
+    <!--查询字段-->
+    <sql id="columns">
+	    `student_id`,
+	    `name`,
+        `address`
+	</sql>
+
+    <!--查询结果集-->
+    <resultMap id="beanMap" type="com.example.springbatchdemo.entity.Student">
+        <result property="studentId" column="student_id"/>
+        <result property="name" column="name"/>
+        <result property="address" column="address"/>
+    </resultMap>
+
+    <!-- 新增记录 -->
+    <insert id="batchInsert" useGeneratedKeys="true" keyProperty="studentId" parameterType="java.util.List">
+        INSERT INTO student_source
+        (
+	    `name`,
+	    `address`
+        )
+        VALUES
+        <foreach collection="studentList" item="item" separator=",">
+            (
+            #{item.name},
+            #{item.address}
+            )
+        </foreach>
+    </insert>
+
+    <select id="queryAll" resultMap="beanMap">
+        SELECT
+        <include refid="columns"/>
+        FROM
+        student_target
+    </select>
+
+    <select id="queryCount" resultType="java.lang.Integer">
+        SELECT
+        count(*)
+        FROM
+        student_target
+    </select>
+</mapper>

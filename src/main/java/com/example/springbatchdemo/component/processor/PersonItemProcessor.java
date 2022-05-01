@@ -6,8 +6,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.Optional;
-
 /**
  * @author zourongsheng
  * @version 1.0
@@ -21,8 +19,8 @@ public class PersonItemProcessor implements ItemProcessor<Person, Person> {
     @Override
     public Person process(final Person person) throws Exception {
 
-        final String firstName = Optional.ofNullable(person.getFirstName()).orElse(null);
-        final String lastName = Optional.ofNullable(person.getLastName()).orElse(null);
+        final String firstName = person.getFirstName();
+        final String lastName = person.getLastName();
 
         final Person transformedPerson = new Person();
         transformedPerson.setFirstName(firstName);

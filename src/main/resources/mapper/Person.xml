@@ -39,7 +39,6 @@
         )
     </insert>
 
-    <!--分页查询用户信息-->
     <select id="queryAll" resultMap="beanMap">
         SELECT
         <include refid="columns"/>

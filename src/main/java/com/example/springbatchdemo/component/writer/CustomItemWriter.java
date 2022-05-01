@@ -1,6 +1,7 @@
 package com.example.springbatchdemo.component.writer;
 
 import com.example.springbatchdemo.entity.Person;
+import com.example.springbatchdemo.entity.Student;
 import org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider;
 import org.springframework.batch.item.database.JdbcBatchItemWriter;
 import org.springframework.batch.item.database.builder.JdbcBatchItemWriterBuilder;
@@ -24,11 +25,21 @@ public class CustomItemWriter {
     private DataSource batchDemoDB;
 
     @Bean("personItemWriter")
-    public JdbcBatchItemWriter<Person> writer() {
+    public JdbcBatchItemWriter<Person> personItemWriter() {
 
         return new JdbcBatchItemWriterBuilder<Person>()
                 .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
                 .sql("INSERT INTO person (first_name, last_name) VALUES (:firstName, :lastName)")
+                .dataSource(batchDemoDB)
+                .build();
+    }
+
+    @Bean("studentItemWriter")
+    public JdbcBatchItemWriter<Student> studentItemWriter() {
+
+        return new JdbcBatchItemWriterBuilder<Student>()
+                .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
+                .sql("INSERT INTO student_target (student_id, name, address) VALUES (:studentId, :name, :address)")
                 .dataSource(batchDemoDB)
                 .build();
     }
