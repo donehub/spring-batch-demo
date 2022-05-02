@@ -1,17 +1,12 @@
 package com.example.springbatchdemo.config;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.util.concurrent.ThreadPoolExecutor;
 
-/**
- * @author shiwei
- * @create 2020/6/27 6:28 下午
- */
-@Slf4j
+
 @Configuration
 public class ExecutorConfig {
 
@@ -20,9 +15,9 @@ public class ExecutorConfig {
     @Bean(TASK_EXECUTOR)
     public ThreadPoolTaskExecutor taskExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(100);
-        executor.setMaxPoolSize(200);
-        executor.setQueueCapacity(200);
+        executor.setCorePoolSize(20);
+        executor.setMaxPoolSize(30);
+        executor.setQueueCapacity(10);
         executor.setKeepAliveSeconds(60);
         executor.setThreadNamePrefix("common-async-executor-");
         // 不要调整该策略

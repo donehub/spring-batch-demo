@@ -43,12 +43,12 @@ public class BatchProcessStudentStep {
     @Bean("batchProcessStudentStep1")
     public Step step1() {
         return stepBuilderFactory.get("step1")
-                .<Student, Student>chunk(10)
+                .<Student, Student>chunk(2000)
                 .reader(studentItemReader)
                 .processor(studentItemProcessor)
                 .writer(studentItemWriter)
                 .taskExecutor(taskExecutor)
-                .throttleLimit(1000)
+                .throttleLimit(30)
                 .build();
     }
 }

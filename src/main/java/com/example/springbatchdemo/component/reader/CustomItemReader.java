@@ -51,7 +51,6 @@ public class CustomItemReader {
         MySqlPagingQueryProvider queryProvider = new MySqlPagingQueryProvider();
         queryProvider.setSelectClause("student_id, name, address");
         queryProvider.setFromClause("from student_source");
-        queryProvider.setWhereClause("where student_id >= 0");
 
         Map<String, Order> sortKeys = new HashMap<>(1);
         sortKeys.put("student_id", Order.ASCENDING);
