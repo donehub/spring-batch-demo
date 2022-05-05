@@ -1,0 +1,41 @@
+package com.example.springbatchdemo.component.job;
+
+import org.springframework.batch.core.Job;
+import org.springframework.batch.core.Step;
+import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
+import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
+import org.springframework.batch.core.job.flow.Flow;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+/**
+ * @author zourongsheng
+ * @version 1.0
+ * @date 2022/5/5 21:44
+ */
+@Configuration
+@EnableBatchProcessing
+public class BatchManageStudentJob {
+
+    @Autowired
+    public JobBuilderFactory jobBuilderFactory;
+
+    @Autowired
+    @Qualifier(value = "batchProcessStudentSplitFlow1")
+    private Flow batchProcessStudentSplitFlow;
+
+    @Autowired
+    @Qualifier(value = "batchProcessStudentStep1")
+    private Step batchProcessStudentStep;
+
+    @Bean
+    public Job manageStudentJob() {
+        return jobBuilderFactory.get("manageStudentJob")
+                .start(batchProcessStudentSplitFlow)
+                .next(batchProcessStudentStep)
+                .build()
+                .build();
+    }
+}

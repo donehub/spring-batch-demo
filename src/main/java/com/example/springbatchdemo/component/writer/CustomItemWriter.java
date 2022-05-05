@@ -43,4 +43,24 @@ public class CustomItemWriter {
                 .dataSource(batchDemoDB)
                 .build();
     }
+
+    @Bean("studentItemUpdateName")
+    public JdbcBatchItemWriter<Student> studentItemUpdateName() {
+
+        return new JdbcBatchItemWriterBuilder<Student>()
+                .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
+                .sql("UPDATE student_source SET name = :name WHERE student_id = :studentId")
+                .dataSource(batchDemoDB)
+                .build();
+    }
+
+    @Bean("studentItemUpdateAddress")
+    public JdbcBatchItemWriter<Student> studentItemUpdateAddress() {
+
+        return new JdbcBatchItemWriterBuilder<Student>()
+                .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
+                .sql("UPDATE student_source SET address = :address WHERE student_id = :studentId")
+                .dataSource(batchDemoDB)
+                .build();
+    }
 }
