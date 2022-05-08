@@ -5,6 +5,7 @@ import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.job.flow.Flow;
+import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -27,15 +28,16 @@ public class BatchManageStudentJob {
     private Flow batchProcessStudentSplitFlow;
 
     @Autowired
-    @Qualifier(value = "batchProcessStudentStep1")
-    private Step batchProcessStudentStep;
+    @Qualifier(value = "batchTransferStudentStep1")
+    private Step batchTransferStudentStep;
 
     @Bean
     public Job manageStudentJob() {
-        return jobBuilderFactory.get("manageStudentJob")
+        return jobBuilderFactory.get("manageStudentJob1")
+                .incrementer(new RunIdIncrementer())
                 .start(batchProcessStudentSplitFlow)
-                .next(batchProcessStudentStep)
-                .build()
+                .next(batchTransferStudentStep)
+                .end()
                 .build();
     }
 }

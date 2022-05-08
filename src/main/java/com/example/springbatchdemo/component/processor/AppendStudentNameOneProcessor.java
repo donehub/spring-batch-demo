@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AppendStudentNameOneProcessor implements ItemProcessor<Student, Student> {
 
-    private static final Logger log = LoggerFactory.getLogger(StudentItemProcessor.class);
+    private static final Logger log = LoggerFactory.getLogger(AppendStudentNameOneProcessor.class);
 
     @Override
     public Student process(final Student studentSource) throws Exception {

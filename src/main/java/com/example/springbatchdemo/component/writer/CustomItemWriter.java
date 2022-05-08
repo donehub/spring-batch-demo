@@ -2,6 +2,7 @@ package com.example.springbatchdemo.component.writer;
 
 import com.example.springbatchdemo.entity.Person;
 import com.example.springbatchdemo.entity.Student;
+import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider;
 import org.springframework.batch.item.database.JdbcBatchItemWriter;
 import org.springframework.batch.item.database.builder.JdbcBatchItemWriterBuilder;
@@ -45,6 +46,7 @@ public class CustomItemWriter {
     }
 
     @Bean("studentItemUpdateName")
+    @StepScope
     public JdbcBatchItemWriter<Student> studentItemUpdateName() {
 
         return new JdbcBatchItemWriterBuilder<Student>()
@@ -55,6 +57,7 @@ public class CustomItemWriter {
     }
 
     @Bean("studentItemUpdateAddress")
+    @StepScope
     public JdbcBatchItemWriter<Student> studentItemUpdateAddress() {
 
         return new JdbcBatchItemWriterBuilder<Student>()

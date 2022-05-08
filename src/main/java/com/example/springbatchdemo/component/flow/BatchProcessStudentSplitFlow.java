@@ -24,8 +24,8 @@ public class BatchProcessStudentSplitFlow {
     private ThreadPoolTaskExecutor taskExecutor;
 
     @Autowired
-    @Qualifier(value = "updateStudentNameOneAndTwoFlow")
-    private Flow updateStudentNameOneAndTwoFlow;
+    @Qualifier(value = "batchUpdateStudentNameOneAndTwoFlow")
+    private Flow batchUpdateStudentNameOneAndTwoFlow;
 
     @Autowired
     @Qualifier(value = "batchUpdateStudentAddressFlow1")
@@ -35,7 +35,7 @@ public class BatchProcessStudentSplitFlow {
     public Flow batchProcessStudentSplitFlow1() {
         return new FlowBuilder<SimpleFlow>("batchProcessStudentSplitFlow1")
                 .split(taskExecutor)
-                .add(updateStudentNameOneAndTwoFlow, batchUpdateStudentAddressFlow)
+                .add(batchUpdateStudentNameOneAndTwoFlow, batchUpdateStudentAddressFlow)
                 .build();
     }
 }

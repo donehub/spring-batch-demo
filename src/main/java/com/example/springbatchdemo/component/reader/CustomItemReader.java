@@ -3,6 +3,7 @@ package com.example.springbatchdemo.component.reader;
 import com.example.springbatchdemo.component.reader.rowmapper.StudentRowMapper;
 import com.example.springbatchdemo.entity.Person;
 import com.example.springbatchdemo.entity.Student;
+import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.item.database.JdbcPagingItemReader;
 import org.springframework.batch.item.database.Order;
 import org.springframework.batch.item.database.builder.JdbcPagingItemReaderBuilder;
@@ -46,6 +47,7 @@ public class CustomItemReader {
     }
 
     @Bean("studentItemReader")
+    @StepScope
     public JdbcPagingItemReader<Student> studentItemReader() {
 
         MySqlPagingQueryProvider queryProvider = new MySqlPagingQueryProvider();

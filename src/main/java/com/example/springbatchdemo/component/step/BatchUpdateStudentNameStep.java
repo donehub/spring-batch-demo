@@ -47,7 +47,7 @@ public class BatchUpdateStudentNameStep {
     @Bean("batchUpdateStudentNameStep1")
     public Step batchUpdateStudentNameStep1() {
         return stepBuilderFactory.get("batchUpdateStudentNameStep1")
-                .<Student, Student>chunk(2000)
+                .<Student, Student>chunk(1000)
                 .reader(studentItemReader)
                 .processor(appendStudentNameOneProcessor)
                 .writer(studentItemUpdateName)
@@ -59,7 +59,7 @@ public class BatchUpdateStudentNameStep {
     @Bean("batchUpdateStudentNameStep2")
     public Step batchUpdateStudentNameStep2() {
         return stepBuilderFactory.get("batchUpdateStudentNameStep2")
-                .<Student, Student>chunk(2000)
+                .<Student, Student>chunk(10)
                 .reader(studentItemReader)
                 .processor(appendStudentNameTwoProcessor)
                 .writer(studentItemUpdateName)

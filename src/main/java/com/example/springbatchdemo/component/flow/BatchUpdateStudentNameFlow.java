@@ -25,9 +25,9 @@ public class BatchUpdateStudentNameFlow {
     @Qualifier(value = "batchUpdateStudentNameStep2")
     private Step batchUpdateStudentNameStep2;
 
-    @Bean("updateStudentNameOneAndTwoFlow")
+    @Bean("batchUpdateStudentNameOneAndTwoFlow")
     public Flow updateStudentNameOneAndTwoFlow() {
-        return new FlowBuilder<SimpleFlow>("updateStudentNameOneAndTwoFlow")
+        return new FlowBuilder<SimpleFlow>("batchUpdateStudentNameOneAndTwoFlow")
                 .start(batchUpdateStudentNameStep1)
                 .next(batchUpdateStudentNameStep2)
                 .build();

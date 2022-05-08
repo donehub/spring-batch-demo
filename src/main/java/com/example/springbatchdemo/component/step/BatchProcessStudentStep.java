@@ -40,10 +40,10 @@ public class BatchProcessStudentStep {
     @Qualifier(value = TASK_EXECUTOR)
     private ThreadPoolTaskExecutor taskExecutor;
 
-    @Bean("batchProcessStudentStep1")
-    public Step step1() {
-        return stepBuilderFactory.get("step1")
-                .<Student, Student>chunk(2000)
+    @Bean("batchTransferStudentStep1")
+    public Step batchTransferStudentStep1() {
+        return stepBuilderFactory.get("batchTransferStudentStep1")
+                .<Student, Student>chunk(1000)
                 .reader(studentItemReader)
                 .processor(studentItemProcessor)
                 .writer(studentItemWriter)

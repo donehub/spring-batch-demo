@@ -24,8 +24,8 @@ public class BatchProcessStudentJob {
     public JobBuilderFactory jobBuilderFactory;
 
     @Autowired
-    @Qualifier(value = "batchProcessStudentStep1")
-    private Step batchProcessStudentStep1;
+    @Qualifier(value = "batchTransferStudentStep1")
+    private Step batchTransferStudentStep1;
 
     @Autowired
     private BatchProcessStudentCompletionListener batchProcessStudentCompletionListener;
@@ -35,7 +35,7 @@ public class BatchProcessStudentJob {
         return jobBuilderFactory.get("transferStudentJob")
                 .incrementer(new RunIdIncrementer())
                 .listener(batchProcessStudentCompletionListener)
-                .flow(batchProcessStudentStep1)
+                .flow(batchTransferStudentStep1)
                 .end()
                 .build();
     }

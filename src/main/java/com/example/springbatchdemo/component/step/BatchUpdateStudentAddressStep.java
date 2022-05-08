@@ -43,7 +43,7 @@ public class BatchUpdateStudentAddressStep {
     @Bean("batchUpdateStudentAddressStep1")
     public Step batchUpdateStudentAddressStep1() {
         return stepBuilderFactory.get("batchUpdateStudentAddressStep1")
-                .<Student, Student>chunk(2000)
+                .<Student, Student>chunk(1000)
                 .reader(studentItemReader)
                 .processor(appendStudentAddressProcessor)
                 .writer(studentItemUpdateAddress)

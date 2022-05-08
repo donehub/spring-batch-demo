@@ -3,6 +3,7 @@ package com.example.springbatchdemo.component.processor;
 import com.example.springbatchdemo.entity.Student;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AppendStudentNameTwoProcessor implements ItemProcessor<Student, Student> {
 
-    private static final Logger log = LoggerFactory.getLogger(StudentItemProcessor.class);
+    private static final Logger log = LoggerFactory.getLogger(AppendStudentNameTwoProcessor.class);
 
     @Override
     public Student process(final Student studentSource) throws Exception {
