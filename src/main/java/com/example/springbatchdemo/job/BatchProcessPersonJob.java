@@ -1,4 +1,4 @@
-package com.example.springbatchdemo.component.job;
+package com.example.springbatchdemo.job;
 
 import com.example.springbatchdemo.component.listener.BatchProcessPersonCompletionListener;
 import org.springframework.batch.core.Job;
