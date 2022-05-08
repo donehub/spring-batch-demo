@@ -57,7 +57,6 @@ public class CustomItemWriter {
     }
 
     @Bean("studentItemUpdateAddress")
-    @StepScope
     public JdbcBatchItemWriter<Student> studentItemUpdateAddress() {
 
         return new JdbcBatchItemWriterBuilder<Student>()

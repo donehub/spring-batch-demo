@@ -32,7 +32,7 @@ public class BatchManageStudentJob {
     private Step batchTransferStudentStep;
 
     @Bean
-    public Job manageStudentJob() {
+    public Job manageStudentJob1() {
         return jobBuilderFactory.get("manageStudentJob1")
                 .incrementer(new RunIdIncrementer())
                 .start(batchProcessStudentSplitFlow)
