@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.transaction.PlatformTransactionManager;
 
 import static com.example.springbatchdemo.config.ExecutorConfig.TASK_EXECUTOR;
 
@@ -41,9 +42,10 @@ public class BatchProcessStudentStep {
     private ThreadPoolTaskExecutor taskExecutor;
 
     @Bean("batchTransferStudentStep1")
-    public Step batchTransferStudentStep1() {
+    public Step batchTransferStudentStep1(PlatformTransactionManager transactionManager) {
         return stepBuilderFactory.get("batchTransferStudentStep1")
-                .<Student, Student>chunk(1000)
+                .transactionManager(transactionManager)
+                .<Student, Student>chunk(10)
                 .reader(studentItemReader)
                 .processor(studentItemProcessor)
                 .writer(studentItemWriter)
