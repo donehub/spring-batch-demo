@@ -45,7 +45,7 @@ public class BatchProcessStudentStep {
     public Step batchTransferStudentStep1(PlatformTransactionManager transactionManager) {
         return stepBuilderFactory.get("batchTransferStudentStep1")
                 .transactionManager(transactionManager)
-                .<Student, Student>chunk(10)
+                .<Student, Student>chunk(1000)
                 .reader(studentItemReader)
                 .processor(studentItemProcessor)
                 .writer(studentItemWriter)

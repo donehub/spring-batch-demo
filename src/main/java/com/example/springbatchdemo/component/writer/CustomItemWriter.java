@@ -65,4 +65,15 @@ public class CustomItemWriter {
                 .dataSource(batchDemoDB)
                 .build();
     }
+
+    @Bean("slaveTransferStudentItemWriter")
+    @StepScope
+    public JdbcBatchItemWriter<Student> slaveTransferStudentItemWriter() {
+
+        return new JdbcBatchItemWriterBuilder<Student>()
+                .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
+                .sql("INSERT INTO student_target (student_id, name, address) VALUES (:studentId, :name, :address)")
+                .dataSource(batchDemoDB)
+                .build();
+    }
 }

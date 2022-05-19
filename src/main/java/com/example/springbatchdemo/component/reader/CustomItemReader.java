@@ -13,6 +13,7 @@ import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
 import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -53,6 +54,29 @@ public class CustomItemReader {
         MySqlPagingQueryProvider queryProvider = new MySqlPagingQueryProvider();
         queryProvider.setSelectClause("student_id, name, address");
         queryProvider.setFromClause("from student_source");
+
+        Map<String, Order> sortKeys = new HashMap<>(1);
+        sortKeys.put("student_id", Order.ASCENDING);
+        queryProvider.setSortKeys(sortKeys);
+
+        return new JdbcPagingItemReaderBuilder<Student>()
+                .name("studentItemReader")
+                .dataSource(batchDemoDB)
+                .fetchSize(1000)
+                .rowMapper(new StudentRowMapper())
+                .queryProvider(queryProvider)
+                .build();
+    }
+
+    @Bean("slaveTransferStudentItemReader")
+    @StepScope
+    public JdbcPagingItemReader<Student> slaveTransferStudentItemReader(@Value("#{stepExecutionContext[fromId]}") final Long fromId,
+                                                                        @Value("#{stepExecutionContext[toId]}") final Long toId) {
+
+        MySqlPagingQueryProvider queryProvider = new MySqlPagingQueryProvider();
+        queryProvider.setSelectClause("student_id, name, address");
+        queryProvider.setFromClause("from student_source");
+        queryProvider.setWhereClause(String.format("where student_id > %s and student_id <= %s", fromId, toId));
 
         Map<String, Order> sortKeys = new HashMap<>(1);
         sortKeys.put("student_id", Order.ASCENDING);
