@@ -27,8 +27,8 @@ public class PartitionTransferStudentJob {
     private Step masterTransferStudentStep;
 
     @Bean
-    public Job transferStudentJob() {
-        return jobBuilderFactory.get("partitionTransferStudentJob")
+    public Job partitionTransferStudentJob1() {
+        return jobBuilderFactory.get("partitionTransferStudentJob1")
                 .incrementer(new RunIdIncrementer())
                 .flow(masterTransferStudentStep)
                 .end()
