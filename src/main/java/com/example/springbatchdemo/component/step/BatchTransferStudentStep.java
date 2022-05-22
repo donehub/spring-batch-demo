@@ -21,7 +21,7 @@ import static com.example.springbatchdemo.config.ExecutorConfig.TASK_EXECUTOR;
  * @date 2022/5/1 16:23
  */
 @Configuration
-public class BatchProcessStudentStep {
+public class BatchTransferStudentStep {
 
     @Autowired
     public StepBuilderFactory stepBuilderFactory;
