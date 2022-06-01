@@ -1,0 +1,27 @@
+[
+  {
+    "departureStation": "合肥",
+    "arrivalStation": "蚌埠",
+    "price": "60.00"
+  },
+  {
+    "departureStation": "南京",
+    "arrivalStation": "蚌埠",
+    "price": "70.00"
+  },
+  {
+    "departureStation": "上海",
+    "arrivalStation": "蚌埠",
+    "price": "220.00"
+  },
+  {
+    "departureStation": "上海",
+    "arrivalStation": "杭州",
+    "price": "75.20"
+  },
+  {
+    "departureStation": "上海",
+    "arrivalStation": "昆山",
+    "price": "19.00"
+  }
+]

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tickets>
+    <ticket>
+        <departureStation>合肥</departureStation>
+        <arrivalStation>蚌埠</arrivalStation>
+        <price>60.00</price>
+    </ticket>
+    <ticket>
+        <departureStation>南京</departureStation>
+        <arrivalStation>蚌埠</arrivalStation>
+        <price>70.00</price>
+    </ticket>
+    <ticket>
+        <departureStation>上海</departureStation>
+        <arrivalStation>蚌埠</arrivalStation>
+        <price>220.00</price>
+    </ticket>
+    <ticket>
+        <departureStation>上海</departureStation>
+        <arrivalStation>杭州</arrivalStation>
+        <price>75.20</price>
+    </ticket>
+    <ticket>
+        <departureStation>上海</departureStation>
+        <arrivalStation>昆山</arrivalStation>
+        <price>19.00</price>
+    </ticket>
+</tickets>
