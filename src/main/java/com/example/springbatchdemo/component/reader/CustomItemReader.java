@@ -163,4 +163,17 @@ public class CustomItemReader {
                 .resources(resources)
                 .build();
     }
+
+    @Bean("studentFileItemReader")
+    public FlatFileItemReader<Student> studentFileItemReader() {
+        return new FlatFileItemReaderBuilder<Student>()
+                .name("ticketFileItemReader")
+                .resource(new ClassPathResource("student.csv"))
+                .delimited()
+                .names(new String[]{"studentId", "name", "address"})
+                .fieldSetMapper(new BeanWrapperFieldSetMapper<Student>() {{
+                    setTargetType(Student.class);
+                }})
+                .build();
+    }
 }
