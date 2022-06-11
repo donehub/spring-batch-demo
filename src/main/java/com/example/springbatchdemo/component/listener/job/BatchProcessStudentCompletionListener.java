@@ -1,4 +1,4 @@
-package com.example.springbatchdemo.component.listener;
+package com.example.springbatchdemo.component.listener.job;
 
 import com.example.springbatchdemo.mapper.StudentMapper;
 import org.slf4j.Logger;

@@ -1,6 +1,6 @@
 package com.example.springbatchdemo.job;
 
-import com.example.springbatchdemo.component.listener.job.BatchProcessPersonCompletionListener;
+import com.example.springbatchdemo.component.listener.job.TestJobListener;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -14,29 +14,28 @@ import org.springframework.context.annotation.Configuration;
 /**
  * @author zourongsheng
  * @version 1.0
- * @date 2022/4/23 16:27
+ * @date 2022/6/11 15:40
  */
 @Configuration
 @EnableBatchProcessing
-public class BatchProcessPersonJob {
+public class TestListenerJob {
 
     @Autowired
     public JobBuilderFactory jobBuilderFactory;
 
     @Autowired
-    @Qualifier(value = "batchProcessPersonStep1")
-    private Step batchProcessPersonStep1;
+    private TestJobListener testJobListener;
 
     @Autowired
-    private BatchProcessPersonCompletionListener batchProcessPersonCompletionListener;
+    @Qualifier(value = "testListenerStep1")
+    private Step testListenerStep;
 
     @Bean
-    public Job importUserJob() {
-        return jobBuilderFactory.get("importUserJob")
-                .preventRestart()
+    public Job testListenerJob1() {
+        return jobBuilderFactory.get("testListenerJob1")
                 .incrementer(new RunIdIncrementer())
-                .listener(batchProcessPersonCompletionListener)
-                .flow(batchProcessPersonStep1)
+                .listener(testJobListener)
+                .flow(testListenerStep)
                 .end()
                 .build();
     }
