@@ -1,6 +1,11 @@
 package com.example.springbatchdemo.component.step;
 
+import com.example.springbatchdemo.component.listener.chunk.TestChunkListener;
+import com.example.springbatchdemo.component.listener.processor.TestProcessListener;
+import com.example.springbatchdemo.component.listener.reader.TestReadListener;
 import com.example.springbatchdemo.component.listener.step.TestStepListener;
+import com.example.springbatchdemo.component.listener.writer.TestWriteListener;
+import com.example.springbatchdemo.component.processor.TicketItemProcessor;
 import com.example.springbatchdemo.entity.Ticket;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
@@ -26,8 +31,23 @@ public class TestListenerStep {
     private TestStepListener testStepListener;
 
     @Autowired
+    private TestChunkListener testChunkListener;
+
+    @Autowired
+    private TestReadListener testReadListener;
+
+    @Autowired
+    private TestProcessListener testProcessListener;
+
+    @Autowired
+    private TestWriteListener testWriteListener;
+
+    @Autowired
     @Qualifier(value = "ticketFileItemReader")
     private FlatFileItemReader<Ticket> ticketFileItemReader;
+
+    @Autowired
+    private TicketItemProcessor ticketItemProcessor;
 
     @Bean("testListenerStep1")
     public Step testListenerStep1(PlatformTransactionManager transactionManager) {
@@ -35,8 +55,14 @@ public class TestListenerStep {
                 .listener(testStepListener)
                 .transactionManager(transactionManager)
                 .<Ticket, Ticket>chunk(2)
+                .faultTolerant()
+                .listener(testChunkListener)
                 .reader(ticketFileItemReader)
+                .listener(testReadListener)
+                .processor(ticketItemProcessor)
+                .listener(testProcessListener)
                 .writer(list -> list.forEach(System.out::println))
+                .listener(testWriteListener)
                 .build();
     }
 }
